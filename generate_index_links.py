@@ -12,7 +12,7 @@ def generate_links_for_index_html(root_dir, placeholder="<!-- LINKS_PLACEHOLDER 
     for item_name in sorted(os.listdir(root_dir)):
         item_path = os.path.join(root_dir, item_name)
         # Verificar si es un directorio y no es el directorio .git ni .github
-        if os.path.isdir(item_path) and not item_name.startswith('.') and item_name != 'etapa_3': # Excluir etapa_3 por ahora, ya que está vacía
+        if os.path.isdir(item_path) and not item_name.startswith('.'): # Incluir todas las carpetas que no empiecen con '.'
             # Verificar si existe un index.html dentro de la subcarpeta
             subfolder_index_path = os.path.join(item_path, "index.html")
             if os.path.exists(subfolder_index_path):
