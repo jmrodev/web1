@@ -32,16 +32,29 @@ def generate_links_for_index_html(root_dir, placeholder="<!-- LINKS_PLACEHOLDER 
 
     # Construir la lista HTML de enlaces
     new_links_block = "<ul>\n" + "\n".join(links_html) + "\n</ul>"
+    new_content = content
 
     # Reemplazar el marcador de posición
     if placeholder in content:
         new_content = content.replace(placeholder, new_links_block)
-        with open(main_index_path, 'w', encoding='utf-8') as f:
-            f.write(new_content)
         print(f"index.html actualizado con éxito. Se insertaron {len(links_html)} enlaces.")
     else:
-        print(f"Advertencia: No se encontró el marcador de posición '{placeholder}' en {main_index_path}. El archivo no fue modificado.")
-        print("Por favor, añade el marcador de posición en tu index.html principal donde quieras que aparezcan los enlaces.")
+        # Si el placeholder no se encuentra, intentar insertarlo antes de </body>
+        body_end_tag = "</body>"
+        if body_end_tag in content:
+            # Insertar el placeholder antes de </body>
+            temp_content = content.replace(body_end_tag, f"{placeholder}\n{body_end_tag}")
+            new_content = temp_content.replace(placeholder, new_links_block)
+            print(f"Advertencia: El marcador de posición '{placeholder}' no se encontró. Se insertaron los enlaces antes de '{body_end_tag}'.")
+        else:
+            print(f"Advertencia: No se encontró el marcador de posición '{placeholder}' ni la etiqueta '{body_end_tag}' en {main_index_path}. El archivo no fue modificado.")
+            print("Por favor, añade el marcador de posición en tu index.html principal donde quieras que aparezcan los enlaces.")
+            return # No hay nada que hacer si no hay placeholder ni body tag
+
+    # Escribir el contenido modificado de vuelta al archivo
+    with open(main_index_path, 'w', encoding='utf-8') as f:
+        f.write(new_content)
+
 
 if __name__ == "__main__":
     # El directorio raíz del proyecto es el directorio donde se ejecuta el script
