@@ -1,21 +1,21 @@
 body {
-  font-family: 'Inter', sans-serif; /* Fuente genérica */
-  background-color: #f0f4f8; /* Color de fondo claro */
-  color: #333; /* Color de texto oscuro */
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
   line-height: 1.6;
   margin: 0;
   padding: 0;
+  box-sizing: border-box; 
 }
 
 header {
-  background-color: #2c3e50; /* Azul oscuro para el encabezado */
-  color: #ecf0f1; /* Texto claro */
+  background-color: #2c3e50;
+  color: #ecf0f1;
   padding: 1rem 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   width: 100%;
 }
 
-/* Contenedor dentro del encabezado para centrar y espaciar */
 header > div {
   max-width: 1200px;
   margin: 0 auto;
@@ -23,43 +23,46 @@ header > div {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  position: relative;
 }
 
 h1 {
-  font-size: 2rem; /* Tamaño de fuente para h1 */
+  font-size: 2rem;
   font-weight: bold;
-  margin: 0; /* Eliminar margen por defecto del h1 */
+  margin: 0;
 }
 
-/* Estilos del botón de menú hamburguesa */
 button.hamburger-menu {
-  display: block; /* Visible por defecto en móvil */
+  display: block;
   color: #ecf0f1;
   font-size: 1.5rem;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0.5rem;
-  outline: none; /* Elimina el contorno al hacer focus */
+  outline: none;
 }
 
-/* Menú de navegación (oculto por defecto en móvil) */
 nav {
   display: none;
   flex-direction: column;
-  width: 100%; /* Ocupa todo el ancho en móvil cuando está visible */
-  position: absolute; /* Para que se superponga al contenido */
-  top: 60px; /* Ajustar según la altura del header */
-  left: 0;
-  background-color: #34495e; /* Fondo para el menú desplegado */
+  max-width: 250px;
+  width: 90%;
+  position: absolute;
+  top: 100%;
+  right: 1rem;
+  background-color: #34495e;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   z-index: 999;
-  border-radius: 0 0 0.75rem 0.75rem;
-  overflow: hidden; /* Para que los bordes redondeados se apliquen bien */
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-out;
 }
 
 nav.nav-open {
-  display: flex; /* Muestra el menú cuando tiene la clase 'nav-open' */
+  display: flex;
+  transform: translateX(0);
 }
 
 nav ul {
@@ -68,36 +71,38 @@ nav ul {
   margin: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 
 nav li {
   margin-bottom: 0.5rem;
+  max-width: 250px;
   width: 100%;
 }
 
 nav a {
   display: block;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
   color: #ecf0f1;
   text-decoration: none;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box; /* Incluye relleno y borde en el ancho */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  font-weight: 500;
+  border-radius: 0.6rem;
 }
 
 nav a:hover, nav a:focus {
-  background-color: #2980b9; /* Un tono más oscuro al pasar el ratón */
-  border-radius: 0.5rem;
+  background-color: #2980b9;
+  border-radius: 0.6rem;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 main {
   padding: 1rem;
   max-width: 1200px;
   margin: 2rem auto;
-    /* Margen superior e inferior para separar del encabezado y del pie de
-     * página */
 }
 
 section {
@@ -107,6 +112,8 @@ section {
   margin-bottom: 1.5rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
+
+
 
 article {
   margin-bottom: 1rem;
@@ -119,36 +126,83 @@ article:last-child {
 }
 
 h2 {
-  font-size: 1.5rem; /* Tamaño de fuente para h2 */
+  font-size: 1.5rem;
   font-weight: 600;
-  color: #2980b9; /* Azul para los títulos */
+  color: #2980b9;
   margin-top: 0;
   margin-bottom: 1rem;
 }
 
 h3 {
-  font-size: 1.25rem; /* Tamaño de fuente para h3 */
+  font-size: 1.25rem;
   font-weight: 500;
-  color: #2980b9; /* Azul para los títulos */
+  color: #2980b9;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
 
 p {
-  margin-bottom: 1rem;
-  color: #555; /* Color de texto más suave para párrafos */
+  margin: 1rem;
+  color: #555;
 }
 
 img {
   max-width: 100%;
   height: auto;
   border-radius: 0.5rem;
-  display: block;
-  margin: 1rem auto;
+}
+
+.article-image-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .article-image-text-container {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .article-image-text-container img {
+    flex-shrink: 0;
+    max-width: 30%;
+    margin: 0;
+  }
+
+  .article-image-text-container > *:not(img) {
+    flex-grow: 1;
+    max-width: 65%;
+  }
+}
+
+.image-and-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .image-and-text {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .image-and-text img {
+    flex-shrink: 0;
+    max-width: 30%;
+    margin: 0;
+  }
+
+  .image-and-text p {
+    flex-grow: 1;
+  }
 }
 
 a {
-  color: #3498db; /* Color para enlaces */
+  color: #3498db;
   text-decoration: none;
 }
 
