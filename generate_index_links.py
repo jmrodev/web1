@@ -1,9 +1,10 @@
 import os
+import re
 
-def generate_links_for_index_html(root_dir, placeholder="<!-- LINKS_PLACEHOLDER -->"):
+def generate_links_for_index_html(root_dir=".", start_marker="<!-- START_LINKS -->", end_marker="<!-- END_LINKS -->"):
     """
     Genera dinámicamente enlaces a los archivos index.html de las subcarpetas
-    y los inserta en el index.html principal.
+    y reemplaza el bloque de enlaces en el index.html principal.
     """
     main_index_path = os.path.join(root_dir, "index.html")
     links_html = []
@@ -11,16 +12,15 @@ def generate_links_for_index_html(root_dir, placeholder="<!-- LINKS_PLACEHOLDER 
     # Recorrer los elementos en el directorio raíz
     for item_name in sorted(os.listdir(root_dir)):
         item_path = os.path.join(root_dir, item_name)
-        # Verificar si es un directorio y no es el directorio .git ni .github
-        if os.path.isdir(item_path) and not item_name.startswith('.'): # Incluir todas las carpetas que no empiecen con '.'
-            # Verificar si existe un index.html dentro de la subcarpeta
+        # Verificar si es un directorio, no está oculto y no es parte de la infraestructura de GH
+        if os.path.isdir(item_path) and not item_name.startswith('.') and item_name not in ['.git', '.github']:
             subfolder_index_path = os.path.join(item_path, "index.html")
             if os.path.exists(subfolder_index_path):
-                links_html.append(f'    <li><a href="./{item_name}/index.html">{item_name.replace("_", " ").title()}</a></li>')
+                display_name = item_name.replace("_", " ").replace("-", " ").title()
+                links_html.append(f'        <li><a href="./{item_name}/">{display_name}</a></li>')
 
-    if not links_html:
-        print("No se encontraron subcarpetas con index.html para enlazar.")
-        return
+    # Construir la lista HTML de enlaces. Si no hay enlaces, la lista estará vacía.
+    links_list_str = "<ul>\n" + "\n".join(links_html) + "\n    </ul>"
 
     # Leer el contenido actual del index.html principal
     try:
@@ -30,33 +30,25 @@ def generate_links_for_index_html(root_dir, placeholder="<!-- LINKS_PLACEHOLDER 
         print(f"Error: No se encontró el archivo {main_index_path}")
         return
 
-    # Construir la lista HTML de enlaces
-    new_links_block = "<ul>\n" + "\n".join(links_html) + "\n</ul>"
-    new_content = content
+    # Construir el bloque de reemplazo completo
+    replacement_block = f"{start_marker}\n    {links_list_str}\n    {end_marker}"
 
-    # Reemplazar el marcador de posición
-    if placeholder in content:
-        new_content = content.replace(placeholder, new_links_block)
-        print(f"index.html actualizado con éxito. Se insertaron {len(links_html)} enlaces.")
-    else:
-        # Si el placeholder no se encuentra, intentar insertarlo antes de </body>
-        body_end_tag = "</body>"
-        if body_end_tag in content:
-            # Insertar el placeholder antes de </body>
-            temp_content = content.replace(body_end_tag, f"{placeholder}\n{body_end_tag}")
-            new_content = temp_content.replace(placeholder, new_links_block)
-            print(f"Advertencia: El marcador de posición '{placeholder}' no se encontró. Se insertaron los enlaces antes de '{body_end_tag}'.")
+    # Usar una expresión regular para encontrar y reemplazar el bloque entre los marcadores
+    pattern = re.compile(f"{re.escape(start_marker)}.*?{re.escape(end_marker)}", re.DOTALL)
+
+    if pattern.search(content):
+        new_content, num_replacements = pattern.subn(replacement_block, content)
+        if num_replacements > 0 and new_content != content:
+            print(f"index.html actualizado con éxito. Se insertaron/actualizaron {len(links_html)} enlaces.")
+            with open(main_index_path, 'w', encoding='utf-8') as f:
+                f.write(new_content)
         else:
-            print(f"Advertencia: No se encontró el marcador de posición '{placeholder}' ni la etiqueta '{body_end_tag}' en {main_index_path}. El archivo no fue modificado.")
-            print("Por favor, añade el marcador de posición en tu index.html principal donde quieras que aparezcan los enlaces.")
-            return # No hay nada que hacer si no hay placeholder ni body tag
-
-    # Escribir el contenido modificado de vuelta al archivo
-    with open(main_index_path, 'w', encoding='utf-8') as f:
-        f.write(new_content)
-
+            print("No se necesitaron cambios en index.html.")
+    else:
+        print(f"Advertencia: No se encontraron los marcadores '{start_marker}' y '{end_marker}' en {main_index_path}.")
+        print("Por favor, asegúrate de que tu index.html principal los contenga.")
+        return
 
 if __name__ == "__main__":
-    # El directorio raíz del proyecto es el directorio donde se ejecuta el script
-    project_root = os.path.dirname(os.path.abspath(__file__))
+    project_root = "."
     generate_links_for_index_html(project_root)
