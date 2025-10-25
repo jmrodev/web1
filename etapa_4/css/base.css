@@ -214,6 +214,17 @@ header {
   }
 }
 
+.responsive-iframe {
+  border: none;
+  width: 100%;
+  height: 350px; /* Or adjust as needed */
+  overflow: hidden;
+}
+
+.center-content {
+  text-align: center;
+}
+
 @media screen and (min-width: 1920px) {
   body {
     font-size: 1.1rem;
