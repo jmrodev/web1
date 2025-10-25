@@ -1,21 +1,18 @@
 body {
-  font-family: 'Inter', sans-serif; /* Fuente genérica */
-  background-color: #f0f4f8; /* Color de fondo claro */
-  color: #333; /* Color de texto oscuro */
+  font-family: 'Inter', sans-serif;
+  background-color: #342;
+  color: #eee;
   line-height: 1.6;
-  margin: 0;
-  padding: 0;
 }
 
 header {
-  background-color: #2c3e50; /* Azul oscuro para el encabezado */
-  color: #ecf0f1; /* Texto claro */
+  background-color: #2c3e50;
+  color: #ecf0f1;
   padding: 1rem 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   width: 100%;
 }
 
-/* Contenedor dentro del encabezado para centrar y espaciar */
 header > div {
   max-width: 1200px;
   margin: 0 auto;
@@ -26,46 +23,40 @@ header > div {
 }
 
 h1 {
-  font-size: 2rem; /* Tamaño de fuente para h1 */
+  font-size: 2rem;
   font-weight: bold;
-  margin: 0; /* Eliminar margen por defecto del h1 */
 }
 
-/* Estilos del botón de menú hamburguesa */
 button.hamburger-menu {
-  display: block; /* Visible por defecto en móvil */
+  display: block;
   color: #ecf0f1;
   font-size: 1.5rem;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0.5rem;
-  outline: none; /* Elimina el contorno al hacer focus */
+  outline: none;
 }
 
-/* Menú de navegación (oculto por defecto en móvil) */
 nav {
   display: none;
   flex-direction: column;
-  width: 100%; /* Ocupa todo el ancho en móvil cuando está visible */
-  position: absolute; /* Para que se superponga al contenido */
-  top: 60px; /* Ajustar según la altura del header */
+  width: 100%;
+  position: absolute;
+  top: 60px;
   left: 0;
-  background-color: #34495e; /* Fondo para el menú desplegado */
+  background-color: #34495e;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   z-index: 999;
   border-radius: 0 0 0.75rem 0.75rem;
-  overflow: hidden; /* Para que los bordes redondeados se apliquen bien */
+  overflow: hidden;
 }
 
 nav.nav-open {
-  display: flex; /* Muestra el menú cuando tiene la clase 'nav-open' */
+  display: flex;
 }
 
 nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -84,11 +75,11 @@ nav a {
   transition: background-color 0.3s ease;
   text-align: center;
   width: 100%;
-  box-sizing: border-box; /* Incluye relleno y borde en el ancho */
+  box-sizing: border-box;
 }
 
 nav a:hover, nav a:focus {
-  background-color: #2980b9; /* Un tono más oscuro al pasar el ratón */
+  background-color: #2980b9;
   border-radius: 0.5rem;
 }
 
@@ -96,15 +87,13 @@ main {
   padding: 1rem;
   max-width: 1200px;
   margin: 2rem auto;
-    /* Margen superior e inferior para separar del encabezado y del pie de
-     * página */
 }
 
 section {
-  background-color: #ffffff;
+  background-color: #3215;
   border-radius: 0.75rem;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
@@ -119,24 +108,23 @@ article:last-child {
 }
 
 h2 {
-  font-size: 1.5rem; /* Tamaño de fuente para h2 */
-  font-weight: 600;
-  color: #2980b9; /* Azul para los títulos */
+  font-size: 1.5rem;
+  color: #eee;
   margin-top: 0;
   margin-bottom: 1rem;
 }
 
 h3 {
-  font-size: 1.25rem; /* Tamaño de fuente para h3 */
+  font-size: 1.25rem;
   font-weight: 500;
-  color: #2980b9; /* Azul para los títulos */
+  color: #eee;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
 
 p {
   margin-bottom: 1rem;
-  color: #555; /* Color de texto más suave para párrafos */
+  color: #ccc;
 }
 
 img {
@@ -148,7 +136,7 @@ img {
 }
 
 a {
-  color: #3498db; /* Color para enlaces */
+  color: #3498db;
   text-decoration: none;
 }
 
@@ -166,58 +154,89 @@ footer {
 }
 
 footer p {
-  margin: 0;
   color: #ecf0f1;
 }
 
+.header-hidden {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+header {
+  transition: transform 0.3s ease-in-out;
+}
+
 @media screen and (min-width: 768px) {
-  /* Menú fijo en pantallas grandes */
   header {
     position: sticky;
     top: 0;
     z-index: 1000;
   }
 
-  /* Oculta el botón de hamburguesa en pantallas grandes */
   button.hamburger-menu {
     display: none;
   }
 
-  /* Muestra el menú de navegación en línea en pantallas grandes */
   nav {
-    display: block; /* Vuelve a modelo de bloque para el flujo normal */
-    position: static; /* Restaura la posición estática */
-    width: auto; /* Ancho automático */
-    background-color: transparent; /* Fondo transparente */
+    display: block;
+    position: static;
+    width: auto;
+    background-color: transparent;
     box-shadow: none;
     border-radius: 0;
   }
 
   nav ul {
-    flex-direction: row; /* Elementos del menú en fila */
-    justify-content: flex-end; /* Alinea a la derecha */
+    flex-direction: row;
+    justify-content: flex-end;
   }
 
   nav li {
-    margin-left: 1rem; /* Espacio entre elementos del menú */
+    margin-left: 1rem;
     margin-bottom: 0;
     width: auto;
   }
 
   nav a {
-    padding: 0.5rem 1rem; /* Ajusta el relleno interno para pantallas grandes */
+    padding: 0.5rem 1rem;
     border-radius: 0.5rem;
   }
 
   main {
     display: grid;
     grid-template-columns: 1fr 3fr;
-      /* Ejemplo: una columna para barra lateral, otra para contenido */
     gap: 2rem;
-    padding: 2rem;
+    padding: 1rem;
   }
 
   section.right {
-    grid-column-start: 2
+    grid-column-start: 2;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  body {
+    font-size: 1.1rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  main {
+    padding: 3rem;
+    max-width: 1800px;
+  }
+
+  section {
+    padding: 2rem;
   }
 }
