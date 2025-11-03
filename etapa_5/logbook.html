@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logbook de Contactos de Radioaficionados</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/logbook.css">
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Mi Sitio Genérico</h1>
+      <button class="hamburger-menu"
+        aria-label="Abrir menú de navegación"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        &#9776; <!-- Icono de hamburguesa -->
+      </button>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="page2.html">Acerca de</a></li>
+          <li><a href="#">Servicios</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="logbook.html">Logbook</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>Gestión de Contactos</h2>
+      <form id="contact-form">
+        <label for="contact-date">Fecha:</label>
+        <input type="date" id="contact-date" required>
+
+        <label for="contact-time">Hora:</label>
+        <input type="time" id="contact-time" required>
+
+        <label for="contact-callsign">Indicativo:</label>
+        <input type="text" id="contact-callsign" placeholder="Ej. LU1ABC" required>
+
+        <label for="contact-frequency">Frecuencia (MHz):</label>
+        <input type="number" id="contact-frequency" step="0.001" placeholder="Ej. 7.100" required>
+
+        <label for="contact-mode">Modo:</label>
+        <input type="text" id="contact-mode" placeholder="Ej. SSB, FT8" required>
+
+        <label for="contact-rst-sent">RST Enviado:</label>
+        <input type="text" id="contact-rst-sent" placeholder="Ej. 599" required>
+
+        <label for="contact-rst-received">RST Recibido:</label>
+        <input type="text" id="contact-rst-received" placeholder="Ej. 599" required>
+
+        <label for="contact-qth">QTH:</label>
+        <input type="text" id="contact-qth" placeholder="Ej. Buenos Aires" required>
+
+        <label for="contact-notes">Notas:</label>
+        <textarea id="contact-notes" placeholder="Notas adicionales"></textarea>
+
+        <button type="submit" id="add-contact-btn" class="add-btn">
+          Agregar Contacto
+        </button>
+        <button type="submit" id="update-contact-btn" class="update-btn">
+          Actualizar Contacto
+        </button>
+        <button type="reset" class="cancel-btn">
+          Cancelar
+        </button>
+      </form>
+      <div id="status-message" class="hidden">Mensaje a mostrar</div>
+    </section>
+    <section>
+      <h2>Contactos Registrados</h2>
+      <table id="contacts-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Indicativo</th>
+            <th>Frecuencia</th>
+            <th>Modo</th>
+            <th>RST Tx</th>
+            <th>RST Rx</th>
+            <th>QTH</th>
+            <th>Notas</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <footer>
+    <div>
+      <p>&copy; 2025 Mi Sitio Genérico. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+  <div id="confirmation-modal" class="modal">
+    <div class="modal-content">
+      <h3>¿Está seguro de que desea eliminar este contacto?</h3>
+      <div class="modal-buttons">
+        <button class="confirm-btn">Sí, eliminar</button>
+        <button class="cancel-btn">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  <script src="js/base.js"></script>
+  <script src="js/logbook.js"></script>
+</body>
+</html>

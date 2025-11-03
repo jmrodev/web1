@@ -9,18 +9,23 @@ table {
 }
 
 th, td {
-  padding: 1rem;
+  padding: 0.6rem;
   text-align: left;
   border-bottom: 1px solid #eee;
 }
 
 th {
-  background-color: #3498db; /* Azul más claro para encabezados de tabla */
+  background-color: #3498db;
   color: #ffffff;
   font-weight: bold;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+td {
+  font-size: 0.8rem;
+  color: #333; /* Dark gray for better contrast */
 }
 
 th:first-child { border-top-left-radius: 0.75rem; }
@@ -60,28 +65,36 @@ tr:nth-child(even) {
 form {
   background-color: #ffffff;
   border-radius: 0.75rem;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  display: grid;
+  grid-template-columns: auto 1fr; /* Label takes auto width, input takes remaining space */
+  gap: 0.1rem 1rem; /* Further reduced row gap, column gap */
+  align-items: center; /* Vertically align items in the grid */
 }
 
 form label {
-  display: block;
-  margin-bottom: 0.5rem;
+  /* display: block; Removed as grid handles layout */
+  margin-bottom: 0; /* Removed as gap handles spacing */
   font-weight: bold;
   color: #2c3e50;
   font-size: 0.875rem; /* text-sm */
+  text-align: right; /* Align labels to the right */
 }
 
 form input[type="text"],
-form input[type="number"] {
-  width: calc(100% - 2rem); /* Ajuste para padding */
-  padding: 0.75rem;
-  margin-bottom: 1rem;
+form input[type="number"],
+form input[type="date"],
+form input[type="time"],
+form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0; /* Removed as grid gap handles spacing */
   border: 1px solid #ccc;
   border-radius: 0.5rem;
-  font-size: 1rem;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07); /* Sombra interna para apariencia de input */
+  font-size: 0.9rem;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
   outline: none;
 }
 
@@ -94,16 +107,17 @@ form input[type="number"]:focus {
 form button {
   background-color: #3498db;
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
-  margin-left: 0.5rem;
-  margin-top: 0.5rem;
+  margin-left: 0;
+  margin-top: 0.8rem;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   outline: none;
+  grid-column: 1 / -1; /* Make buttons span both columns */
 }
 
 form button:hover {
@@ -180,7 +194,8 @@ form button.cancel-btn:hover {
 }
 
 .modal-content h3 {
-  color: #333;
+  color: #333;1	2025-11-03	14:43	LU7YYY	7100	ssb	599	599	buenos aires	gracias	￼Editar￼Eliminar
+2	2025-11-03	14:43	LW3EDC	7100	ssb	599	599	buenos aires	gracia
   margin-bottom: 1rem;
 }
 
