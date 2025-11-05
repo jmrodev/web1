@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   const dataForm = document.getElementById('data-form');
-  const itemNameInput = document.getElementById('item-name');
-  const itemValueInput = document.getElementById('item-value');
+  const callsignInput = document.getElementById('callsign');
+  const frequencyInput = document.getElementById('frequency');
+  const modeInput = document.getElementById('mode');
+  const dateInput = document.getElementById('date');
   const tableBody = document.getElementById('table-body');
   const addItemBtn = document.getElementById('add-item-btn');
   const updateItemBtn = document.getElementById('update-item-btn');
@@ -48,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (data.length === 0) {
       const row = document.createElement( 'tr' ) ;
       const empty = document.createElement( 'td' ) ;
-      empty.setAttribute( 'colspan' , 4 ) ;
+      empty.setAttribute( 'colspan' , 6 ) ;
       empty.classList.add( 'empty' ) ;
-      empty.textContent = 'No hay elementos para mostrar.' ;
+      empty.textContent = 'No hay contactos para mostrar.' ;
       row.appendChild( empty ) ;
       tableBody.appendChild( row ) ;
       return;
@@ -58,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     data.forEach( ( item , index ) => {
       const row = document.createElement('tr') ;
       item.id = index + 1 ;
-      [ 'id', 'name', 'value' ].forEach( attr => {
+      [ 'id', 'callsign', 'frequency', 'mode', 'date' ].forEach( attr => {
         const td = document.createElement('td') ;
         td.textContent=item[attr] ;
         row.appendChild( td ) ;
@@ -71,8 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
       edit.textContent = 'Editar' ;
       edit.addEventListener( 'click' , (e) => {
         setEditingItem( item.id ) ;
-        itemNameInput.value = item.name;
-        itemValueInput.value = item.value;
+        callsignInput.value = item.callsign;
+        frequencyInput.value = item.frequency;
+        modeInput.value = item.mode;
+        dateInput.value = item.date;
       } ) ;
       actions.appendChild( edit ) ;
 
@@ -99,24 +103,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // Manejar el envío del formulario (Agregar/Actualizar)
   dataForm.addEventListener( 'submit', (event) => {
     event.preventDefault() ;
-    const name = itemNameInput.value.trim() ;
-    const value = parseFloat( itemValueInput.value ) ;
+    const callsign = callsignInput.value.trim() ;
+    const frequency = parseFloat( frequencyInput.value ) ;
+    const mode = modeInput.value.trim() ;
+    const date = dateInput.value.trim() ;
 
-    if( !name || isNaN( value ) ) {
+    if( !callsign || isNaN( frequency ) || !mode || !date ) {
       showMessage( statusMessage,
-        'Por favor, introduce un nombre y un valor válidos.', 'error' ) ;
+        'Por favor, introduce Callsign, Frecuencia, Modo y Fecha válidos.', 'error' ) ;
       return;
     }
 
-    const itemData = { name, value } ;
+    const itemData = { callsign, frequency, mode, date } ;
 
     if( editingItemId ) {
       items[editingItemId-1] = itemData ;
       showMessage( statusMessage,
-        'Elemento actualizado con éxito.', 'success' ) ;
+        'Contacto actualizado con éxito.', 'success' ) ;
     } else {
       items.push( itemData ) ;
-      showMessage( statusMessage, 'Elemento agregado con éxito.', 'success' ) ;
+      showMessage( statusMessage, 'Contacto agregado con éxito.', 'success' ) ;
     }
     resetEditingItem() ;
     dataForm.reset() ;
@@ -132,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(itemToDeleteId) {
       items.splice( itemToDeleteId - 1 , 1 ) ; // Elimina el elemento de items
       showMessage( statusMessage,
-        'Elemento eliminado con éxito.', 'success' ) ;
+        'Contacto eliminado con éxito.', 'success' ) ;
       loadData() ; // Recargar datos después de eliminar
       itemToDeleteId = null; // Limpiar el ID después de la operación
     }

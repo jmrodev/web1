@@ -6,10 +6,9 @@ document.addEventListener( 'DOMContentLoaded' , () => {
     const isExpanded = hamburgerButton
       .getAttribute( 'aria-expanded' ) === 'true' ;
     hamburgerButton.setAttribute( 'aria-expanded' , !isExpanded ) ;
-    mainNav.classList.toggle( 'nav-open' ) ; // Alterna la clase 'nav-open'
+    mainNav.classList.toggle( 'nav-open' ) ;
   } ) ;
 
-  // Cierra el menú si se hace clic fuera de él en dispositivos móviles
   document.addEventListener( 'click' , (event) => {
     if( !mainNav.contains( event.target ) &&
         !hamburgerButton.contains( event.target ) &&
@@ -19,14 +18,31 @@ document.addEventListener( 'DOMContentLoaded' , () => {
     }
   } ) ;
 
-  // Ajusta el menú al cambiar el tamaño de la ventana (para pantallas grandes)
   window.addEventListener( 'resize' , () => {
-    if( window.innerWidth >= 768 ) { // Si es pantalla grande
+    if( window.innerWidth >= 768 ) {
       mainNav.classList.remove( 'nav-open' ) ;
-      // Asegura que no tenga la clase nav-open
+
       hamburgerButton.setAttribute('aria-expanded', 'false') ;
     }
-    // En pantallas pequeñas, el estado del menú se maneja solo con el clic
-    // del botón
+
   } ) ;
+
+  let lastScrollY = window.scrollY;
+  const header = document.querySelector('header');
+
+  window.addEventListener('scroll', () => {
+    if (window.innerWidth >= 768) {
+      if (window.scrollY > lastScrollY) {
+
+        header.classList.add('header-hidden');
+      } else {
+
+        header.classList.remove('header-hidden');
+      }
+    } else {
+
+      header.classList.remove('header-hidden');
+    }
+    lastScrollY = window.scrollY;
+  });
 } ) ;
