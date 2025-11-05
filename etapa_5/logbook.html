@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logbook de Contactos de Radioaficionados</title>
-  <link rel="stylesheet" href="css/reset.css">
+  <title>Radioaficionados - Logbook</title>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/logbook.css">
 </head>
 <body>
   <header>
     <div>
-      <h1>Mi Sitio Genérico</h1>
+      <h1>El Hobby de la Radioafición</h1>
       <button class="hamburger-menu"
         aria-label="Abrir menú de navegación"
         aria-expanded="false"
@@ -22,9 +21,8 @@
       <nav id="main-nav">
         <ul>
           <li><a href="index.html">Inicio</a></li>
-          <li><a href="page2.html">Acerca de</a></li>
-          <li><a href="#">Servicios</a></li>
-          <li><a href="#">Contacto</a></li>
+          <li><a href="equipos.html">Equipos y Antenas</a></li>
+          <li><a href="licencias.html">Licencias y Reglamentos</a></li>
           <li><a href="logbook.html">Logbook</a></li>
         </ul>
       </nav>
@@ -32,39 +30,20 @@
   </header>
   <main>
     <section>
-      <h2>Gestión de Contactos</h2>
-      <form id="contact-form">
-        <label for="contact-date">Fecha:</label>
-        <input type="date" id="contact-date" required>
-
-        <label for="contact-time">Hora:</label>
-        <input type="time" id="contact-time" required>
-
-        <label for="contact-callsign">Indicativo:</label>
-        <input type="text" id="contact-callsign" placeholder="Ej. LU1ABC" required>
-
-        <label for="contact-frequency">Frecuencia (MHz):</label>
-        <input type="number" id="contact-frequency" step="0.001" placeholder="Ej. 7.100" required>
-
-        <label for="contact-mode">Modo:</label>
-        <input type="text" id="contact-mode" placeholder="Ej. SSB, FT8" required>
-
-        <label for="contact-rst-sent">RST Enviado:</label>
-        <input type="text" id="contact-rst-sent" placeholder="Ej. 599" required>
-
-        <label for="contact-rst-received">RST Recibido:</label>
-        <input type="text" id="contact-rst-received" placeholder="Ej. 599" required>
-
-        <label for="contact-qth">QTH:</label>
-        <input type="text" id="contact-qth" placeholder="Ej. Buenos Aires" required>
-
-        <label for="contact-notes">Notas:</label>
-        <textarea id="contact-notes" placeholder="Notas adicionales"></textarea>
-
-        <button type="submit" id="add-contact-btn" class="add-btn">
+      <h2>Gestión de Contactos de Radioaficionados</h2>
+      <form id="data-form">
+        <label for="callsign">Callsign:</label>
+        <input type="text" id="callsign" placeholder="Ej. LU1ABC" required>
+        <label for="frequency">Frecuencia (MHz):</label>
+        <input type="number" id="frequency" placeholder="Ej. 7.100" required step="0.001">
+        <label for="mode">Modo:</label>
+        <input type="text" id="mode" placeholder="Ej. FT8" required>
+        <label for="date">Fecha (YYYY-MM-DD):</label>
+        <input type="date" id="date" required>
+        <button type="submit" id="add-item-btn" class="add-btn">
           Agregar Contacto
         </button>
-        <button type="submit" id="update-contact-btn" class="update-btn">
+        <button type="submit" id="update-item-btn" class="update-btn">
           Actualizar Contacto
         </button>
         <button type="reset" class="cancel-btn">
@@ -74,20 +53,15 @@
       <div id="status-message" class="hidden">Mensaje a mostrar</div>
     </section>
     <section>
-      <h2>Contactos Registrados</h2>
-      <table id="contacts-table">
+      <h2>Logbook de Contactos</h2>
+      <table id="data-table">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Fecha</th>
-            <th>Hora</th>
-            <th>Indicativo</th>
-            <th>Frecuencia</th>
+            <th>Callsign</th>
+            <th>Frecuencia (MHz)</th>
             <th>Modo</th>
-            <th>RST Tx</th>
-            <th>RST Rx</th>
-            <th>QTH</th>
-            <th>Notas</th>
+            <th>Fecha</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -98,7 +72,7 @@
   </main>
   <footer>
     <div>
-      <p>&copy; 2025 Mi Sitio Genérico. Todos los derechos reservados.</p>
+      <p>&copy; 2025 Radioaficionados en Línea. Todos los derechos reservados.</p>
     </div>
   </footer>
   <div id="confirmation-modal" class="modal">
