@@ -3,70 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plantilla de Sitio Web - Inicio</title>
+  <title>Radioaficionados - Inicio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/base.css">
 </head>
 <body>
   <header>
     <div>
-      <h1>Mi Sitio Genérico</h1>
+      <h1>El Hobby de la Radioafición</h1>
       <button class="hamburger-menu"
         aria-label="Abrir menú de navegación"
         aria-expanded="false"
         aria-controls="main-nav"
       >
-        &#9776; <!-- Icono de hamburguesa -->
+        &#9776;
       </button>
       <nav id="main-nav">
         <ul>
           <li><a href="index.html">Inicio</a></li>
-          <li><a href="page2.html">Acerca de</a></li>
-          <li><a href="#">Servicios</a></li>
-          <li><a href="#">Contacto</a></li>
-          <li><a href="data.html">Datos Dinámicos</a></li>
+          <li><a href="equipos.html">Equipos y Antenas</a></li>
+          <li><a href="licencias.html">Licencias y Reglamentos</a></li>
+          <li><a href="logbook.html">Logbook</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main>
-    <section>
-      <h2>Bienvenido a Nuestro Sitio Genérico</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
-      <img src="img/imagen_1.svg" alt="Descripción de la imagen genérica 1">
+    <section class="left">
+      <h2>Bienvenido al Mundo de la Radioafición</h2>
+      <iframe class="responsive-iframe" src="https://www.dxfuncluster.com/cluster_mini_up.html"></iframe>
+
+<div class="center-content">
+<a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!"><img src="https://www.hamqsl.com/solarpich.php" alt="Solar activity image"></a>
+</div>
+   
+<div class="center-content">
+<a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!"><img src="https://www.hamqsl.com/solarmuf.php" alt="Solar activity image"></a>
+</div>
+
     </section>
-    <section>
+    <section class="right">
       <h2>Entradas Recientes</h2>
       <article>
-        <h3>Entrada del Blog 1: Explorando Nuevos Horizontes</h3>
-        <p>
-          Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </p>
-        <img src="img/imagen_2.svg" alt="Descripción de la imagen genérica 2">
-        <a href="#">Leer más...</a>
+        <h3>Primeros Pasos en la Radioafición: Tu Primera Estación</h3>
+        <div class="article-image-text-container">
+          <p>
+            Iniciar en la radioafición es una aventura emocionante. El primer paso es obtener tu licencia, lo que te abrirá las puertas a un mundo de comunicación global. Luego, necesitarás tu primer equipo: un transceptor de HF o VHF/UHF y una antena sencilla pueden ser suficientes para empezar a hacer tus primeros contactos (QSOs).
+          </p>
+          <img src="img/vintage.png" alt="Equipo de radioaficionado básico">
+          <a href="#">Leer más...</a>
+        </div>
       </article>
       <article>
-        <h3>Entrada del Blog 2: La Importancia de la Innovación</h3>
-        <p>
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <img src="img/imagen_3.svg" alt="Descripción de la imagen genérica 3">
-        <a href="#">Leer más...</a>
+        <h3>Modos Digitales: FT8 y la Comunicación con Poca Potencia</h3>
+        <div class="article-image-text-container">
+          <p>
+            Los modos digitales han revolucionado la radioafición. FT8, por ejemplo, permite realizar contactos a larga distancia (DX) con muy poca potencia, incluso en condiciones de propagación desfavorables. Es una excelente manera de experimentar con la comunicación digital y descubrir hasta dónde pueden llegar tus señales.
+          </p>
+          <img src="img/ft8.png" alt="Cascada de señal en modo digital FT8">
+          <a href="#">Leer más...</a>
+        </div>
       </article>
       <article>
-        <h3>Entrada del Blog 3: Un Vistazo al Futuro</h3>
-        <p>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-        </p>
-        <img src="img/imagen_4.svg" alt="Descripción de la imagen genérica 4">
-        <a href="#">Leer más...</a>
+        <h3>Satélites para Radioaficionados: Comunicándose a través del Espacio</h3>
+        <div class="article-image-text-container">
+          <p>
+            ¿Sabías que puedes comunicarte a través de satélites diseñados para radioaficionados? Con una antena direccional y un equipo adecuado, puedes seguir el paso de un satélite y establecer contacto con otros radioaficionados en su área de cobertura. Es una de las facetas más técnicas y gratificantes del hobby.
+          </p>
+          <img src="img/satelite.png" alt="Satelite para comunicacion de radioaficionados">
+          <a href="#">Leer más...</a>
+        </div>
       </article>
     </section>
   </main>
   <footer>
     <div>
-      <p>&copy; 2025 Mi Sitio Genérico. Todos los derechos reservados.</p>
+      <p>&copy; 2025 Radioaficionados en Línea. Todos los derechos reservados.</p>
+      <p>
+          <a href="https://jigsaw.w3.org/css-validator/check/referer">
+              <img style="border:0;width:88px;height:31px"
+                  src="https://jigsaw.w3.org/css-validator/images/vcss-blue"
+                  alt="¡CSS Válido!">
+          </a>
+      </p>
     </div>
   </footer>
   <script src="js/base.js"></script>
