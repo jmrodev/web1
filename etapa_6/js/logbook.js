@@ -46,16 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     dateInput.value = localStorage.getItem('lastDate');
   }
 
-  // Cargar valores guardados de localStorage al iniciar
-  if (localStorage.getItem('lastFrequency')) {
-    frequencyInput.value = localStorage.getItem('lastFrequency');
-  }
-  if (localStorage.getItem('lastMode')) {
-    modeInput.value = localStorage.getItem('lastMode');
-  }
-  if (localStorage.getItem('lastDate')) {
-    dateInput.value = localStorage.getItem('lastDate');
-  }
 
   // Función para mostrar mensajes de estado (error/éxito)
   function showMessage(element, message, type = 'error') {
@@ -64,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     element.classList.add(type); // Añadir la clase de tipo
     setTimeout(() => {
       element.classList.add('hidden');
-    }, 5000); // Ocultar mensaje después de 5 segundos
+    }, 10000); // Ocultar mensaje después de 5 segundos
   }
 
   // Función para manejar errores de la API con reintentos (exponential backoff)
@@ -106,10 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateItemBtn.style.display = 'none';
   }
 
-  // Función para guardar los items en localStorage
-  function saveItems() {
-    localStorage.setItem('logbookItems', JSON.stringify(items));
-  }
+
 
   // Función para renderizar la tabla con los datos
   function renderTable(data) {

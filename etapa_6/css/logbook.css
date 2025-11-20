@@ -140,8 +140,12 @@ form button.cancel-btn:hover {
   text-align: center;
   font-weight: 600;
   margin-bottom: 0.5rem; /* Reduced margin */
-  padding: 0.25rem; /* Reduced padding */
+  padding: 0.5rem; /* Increased padding */
   border-radius: 0; /* No rounded corners */
+  border: 1px solid #3498db; /* Add a border */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #status-message {
