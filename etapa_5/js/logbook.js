@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let editingItemId = null;
     // Para almacenar el ID del elemento que se está editando
 
-  const items = [] ;
+  let items = JSON.parse(localStorage.getItem('logbookItems')) || [] ;
 
   // Cargar valores guardados de localStorage al iniciar
   if (localStorage.getItem('lastFrequency')) {
@@ -64,6 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
     editingItemId = null;
     addItemBtn.style.display = 'inline-block';
     updateItemBtn.style.display = 'none';
+  }
+
+  // Función para guardar los items en localStorage
+  function saveItems() {
+    localStorage.setItem('logbookItems', JSON.stringify(items));
   }
 
   // Función para renderizar la tabla con los datos
@@ -146,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
       items.push( itemData ) ;
       showMessage( statusMessage, 'Contacto agregado con éxito.', 'success' ) ;
     }
+    saveItems();
     resetEditingItem() ;
     dataForm.reset() ;
     loadData() ; // Recargar datos después de la operación
@@ -159,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if(itemToDeleteId) {
       items.splice( itemToDeleteId - 1 , 1 ) ; // Elimina el elemento de items
+      saveItems();
       showMessage( statusMessage,
         'Contacto eliminado con éxito.', 'success' ) ;
       loadData() ; // Recargar datos después de eliminar
