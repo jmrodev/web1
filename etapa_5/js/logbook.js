@@ -9,6 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateItemBtn = document.getElementById('update-item-btn');
   const statusMessage = document.getElementById('status-message');
 
+  // Guardar valores en localStorage cuando cambian
+  frequencyInput.addEventListener('input', () => {
+    localStorage.setItem('lastFrequency', frequencyInput.value);
+  });
+  modeInput.addEventListener('input', () => {
+    localStorage.setItem('lastMode', modeInput.value);
+  });
+  dateInput.addEventListener('input', () => {
+    localStorage.setItem('lastDate', dateInput.value);
+  });
+
   // Modal de confirmación
   const confirmationModal = document.getElementById('confirmation-modal');
   const confirmDeleteBtn = confirmationModal.querySelector('.confirm-btn');
@@ -20,6 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Para almacenar el ID del elemento que se está editando
 
   const items = [] ;
+
+  // Cargar valores guardados de localStorage al iniciar
+  if (localStorage.getItem('lastFrequency')) {
+    frequencyInput.value = localStorage.getItem('lastFrequency');
+  }
+  if (localStorage.getItem('lastMode')) {
+    modeInput.value = localStorage.getItem('lastMode');
+  }
+  if (localStorage.getItem('lastDate')) {
+    dateInput.value = localStorage.getItem('lastDate');
+  }
 
   // Función para mostrar mensajes de estado (error/éxito)
   function showMessage(element, message, type = 'error') {
