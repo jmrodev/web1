@@ -10,6 +10,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const loadingIndicator = document.getElementById('loading-indicator');
   const statusMessage = document.getElementById('status-message');
 
+  // Guardar valores en localStorage cuando cambian
+  frequencyInput.addEventListener('input', () => {
+    localStorage.setItem('lastFrequency', frequencyInput.value);
+  });
+  modeInput.addEventListener('input', () => {
+    localStorage.setItem('lastMode', modeInput.value);
+  });
+  dateInput.addEventListener('input', () => {
+    localStorage.setItem('lastDate', dateInput.value);
+  });
+
   // Modal de confirmación
   const confirmationModal = document.getElementById('confirmation-modal');
   const confirmDeleteBtn = confirmationModal.querySelector('.confirm-btn');
@@ -23,6 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // Base de Mock API
   const API_BASE_URL =
     'https://691ef0fbbb52a1db22bfc5b1.mockapi.io/api/v1/contactos' ;
+
+  // Cargar valores guardados de localStorage al iniciar
+  if (localStorage.getItem('lastFrequency')) {
+    frequencyInput.value = localStorage.getItem('lastFrequency');
+  }
+  if (localStorage.getItem('lastMode')) {
+    modeInput.value = localStorage.getItem('lastMode');
+  }
+  if (localStorage.getItem('lastDate')) {
+    dateInput.value = localStorage.getItem('lastDate');
+  }
 
   // Cargar valores guardados de localStorage al iniciar
   if (localStorage.getItem('lastFrequency')) {
@@ -196,7 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       await response.json() ; // Consumir la respuesta
       resetEditingItem() ;
-      dataForm.reset() ;
+      dataForm.reset() ; // This line clears the form
+      // Explicitly clear localStorage for persistence
+      localStorage.setItem('lastFrequency', '');
+      localStorage.setItem('lastMode', '');
+      localStorage.setItem('lastDate', '');
       loadData() ; // Recargar datos después de la operación
     } catch( error ) {
       console.error( 'Error al guardar el contacto:', error ) ;
