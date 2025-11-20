@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Base de Mock API
   const API_BASE_URL =
-    'https://YOUR_MOCK_API_URL_HERE.mockapi.io/api/v1/contactos' ; // Placeholder URL, user needs to replace
+    'https://691ef0fbbb52a1db22bfc5b1.mockapi.io/api/v1/contactos' ;
 
   // Cargar valores guardados de localStorage al iniciar
   if (localStorage.getItem('lastFrequency')) {
