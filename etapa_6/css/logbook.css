@@ -134,6 +134,16 @@ form button.cancel-btn:hover {
 }
 
 /* Estilos para mensajes de estado */
+#loading-indicator {
+  color: #3498db; /* Keep the blue color for visibility */
+  background-color: #3a3a3a; /* Dark background */
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 0.5rem; /* Reduced margin */
+  padding: 0.25rem; /* Reduced padding */
+  border-radius: 0; /* No rounded corners */
+}
+
 #status-message {
   text-align: center;
   font-weight: 600;

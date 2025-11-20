@@ -7,18 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const tableBody = document.getElementById('table-body');
   const addItemBtn = document.getElementById('add-item-btn');
   const updateItemBtn = document.getElementById('update-item-btn');
+  const loadingIndicator = document.getElementById('loading-indicator');
   const statusMessage = document.getElementById('status-message');
-
-  // Guardar valores en localStorage cuando cambian
-  frequencyInput.addEventListener('input', () => {
-    localStorage.setItem('lastFrequency', frequencyInput.value);
-  });
-  modeInput.addEventListener('input', () => {
-    localStorage.setItem('lastMode', modeInput.value);
-  });
-  dateInput.addEventListener('input', () => {
-    localStorage.setItem('lastDate', dateInput.value);
-  });
 
   // Modal de confirmación
   const confirmationModal = document.getElementById('confirmation-modal');
@@ -30,7 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let editingItemId = null;
     // Para almacenar el ID del elemento que se está editando
 
-  let items = JSON.parse(localStorage.getItem('logbookItems')) || [] ;
+  // Base de Mock API
+  const API_BASE_URL =
+    'https://YOUR_MOCK_API_URL_HERE.mockapi.io/api/v1/contactos' ; // Placeholder URL, user needs to replace
 
   // Cargar valores guardados de localStorage al iniciar
   if (localStorage.getItem('lastFrequency')) {
@@ -51,6 +43,32 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       element.classList.add('hidden');
     }, 5000); // Ocultar mensaje después de 5 segundos
+  }
+
+  // Función para manejar errores de la API con reintentos (exponential backoff)
+  async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          // Intenta leer el mensaje de error del cuerpo de la respuesta si
+          // está disponible
+          const errorText = await response.text();
+          throw new Error( 'HTTP error! status: ' + response.status + ' - ' +
+            ( errorText || response.statusText ) ) ;
+        }
+        return response;
+      } catch( error ) {
+        if( i < retries - 1 ) {
+          console.warn( 'Intento ' + (i + 1) + ' fallido. Reintentando en ' +
+            ( delay / 1000 )  + ' segundos...', error ) ;
+          await new Promise(res => setTimeout(res, delay));
+          delay *= 2; // Duplicar el retraso para el siguiente intento
+        } else {
+          throw error; // Lanzar el error si se agotaron los reintentos
+        }
+      }
+    }
   }
 
   function setEditingItem( id ) {
@@ -84,9 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
       tableBody.appendChild( row ) ;
       return;
     }
-    data.forEach( ( item , index ) => {
+    data.forEach( ( item ) => { // Removed 'index'
       const row = document.createElement('tr') ;
-      item.id = index + 1 ;
+      // item.id = index + 1 ; // Removed this line
       [ 'id', 'callsign', 'frequency', 'mode', 'date' ].forEach( attr => {
         const td = document.createElement('td') ;
         td.textContent=item[attr] ;
@@ -122,13 +140,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Función para cargar datos al DOM desde el arreglo de items.
-  function loadData() {
-    renderTable( items ) ;
+  // Función para cargar datos desde la API
+  async function loadData() {
+    loadingIndicator.classList.remove('hidden');
+    try {
+      const response = await fetchWithRetry(API_BASE_URL);
+      const data = await response.json();
+      renderTable(data);
+    } catch (error) {
+      console.error('Error al cargar los datos:', error);
+      showMessage(statusMessage, `Error al cargar los datos: ${error.message}`);
+    } finally {
+      loadingIndicator.classList.add('hidden');
+    }
   }
 
   // Manejar el envío del formulario (Agregar/Actualizar)
-  dataForm.addEventListener( 'submit', (event) => {
+  dataForm.addEventListener( 'submit', async (event) => {
     event.preventDefault() ;
     const callsign = callsignInput.value.trim() ;
     const frequency = parseFloat( frequencyInput.value ) ;
@@ -143,33 +171,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const itemData = { callsign, frequency, mode, date } ;
 
-    if( editingItemId ) {
-      items[editingItemId-1] = itemData ;
+    loadingIndicator.classList.remove('hidden');
+
+    try {
+      let response;
+      if( editingItemId ) {
+        // Actualizar contacto existente (PUT)
+        response = await fetchWithRetry(`${API_BASE_URL}/${editingItemId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(itemData)
+        });
+        showMessage( statusMessage,
+          'Contacto actualizado con éxito.', 'success' ) ;
+      } else {
+        // Agregar nuevo contacto (POST)
+        response = await fetchWithRetry( API_BASE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(itemData)
+        } ) ;
+        showMessage( statusMessage,
+          'Contacto agregado con éxito.', 'success' ) ;
+      }
+      await response.json() ; // Consumir la respuesta
+      resetEditingItem() ;
+      dataForm.reset() ;
+      loadData() ; // Recargar datos después de la operación
+    } catch( error ) {
+      console.error( 'Error al guardar el contacto:', error ) ;
       showMessage( statusMessage,
-        'Contacto actualizado con éxito.', 'success' ) ;
-    } else {
-      items.push( itemData ) ;
-      showMessage( statusMessage, 'Contacto agregado con éxito.', 'success' ) ;
+        "Error al guardar el contacto: " + error.message ) ;
+    } finally {
+      loadingIndicator.classList.add( 'hidden' ) ;
     }
-    saveItems();
-    resetEditingItem() ;
-    dataForm.reset() ;
-    loadData() ; // Recargar datos después de la operación
   } ) ;
 
   dataForm.addEventListener( 'reset' , resetEditingItem ) ;
 
   // Lógica del modal de confirmación
-  confirmDeleteBtn.addEventListener('click', () => {
+  confirmDeleteBtn.addEventListener('click', async () => {
     confirmationModal.style.display = 'none'; // Oculta el modal
 
     if(itemToDeleteId) {
-      items.splice( itemToDeleteId - 1 , 1 ) ; // Elimina el elemento de items
-      saveItems();
-      showMessage( statusMessage,
-        'Contacto eliminado con éxito.', 'success' ) ;
-      loadData() ; // Recargar datos después de eliminar
-      itemToDeleteId = null; // Limpiar el ID después de la operación
+      loadingIndicator.classList.remove('hidden');
+      try {
+        const response =
+          await fetchWithRetry(`${API_BASE_URL}/${itemToDeleteId}`, {
+            method: 'DELETE'
+          } ) ;
+        if( response.ok ) {
+          showMessage( statusMessage,
+            'Contacto eliminado con éxito.', 'success' ) ;
+          loadData() ; // Recargar datos después de eliminar
+        } else {
+          throw new Error( 'No se pudo eliminar el contacto.' ) ;
+        }
+      } catch (error) {
+        console.error( 'Error al eliminar el contacto:', error ) ;
+        showMessage( statusMessage,
+          'Error al eliminar el contacto: ' + error.message ) ;
+      } finally {
+        loadingIndicator.classList.add( 'hidden' ) ;
+        itemToDeleteId = null; // Limpiar el ID después de la operación
+      }
     }
   } ) ;
 
